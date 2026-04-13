@@ -1,0 +1,4 @@
+#    arquivo.py   nome da nosa classe
+# cliente1=Cliente("07", "Stalone", 312456785, "corrente", 0, 0)
+
+# print(cliente1)
