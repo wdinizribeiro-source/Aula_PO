@@ -1,6 +1,7 @@
 from Cliente import Cliente
 import pandas as pd
 from criar_conta import criar_conta
+from Adicionar_conta import adicionar_conta
 
 import os 
 
@@ -17,18 +18,32 @@ if opcao == 1:
     nome_cliente=input("Digite seu nome: ")
     CPF =str(input("Digite seu CPF: "))
     tipo_conta=input("Digite tipo de conta: ")
+    df=pd.DataFrame()
 
     if os.path.exists(caminho_excel): # true
         print("arquivo ja existe")
         df =pd.read_excel(caminho_excel)
+
+        #instanciando o adicionar conta
+        adicionar = adicionar_conta(nome_cliente, CPF, tipo_conta)
+
+        #chamando a função adicionar que esta dentro da classe 
+        novo_dado = adicionar.adicionar(df)
     else:
         print("Arquivo não existe")
-        df=pd.DataFrame()
+
+
         # instancio para manipular os dados adicionados
         conta = criar_conta(nome_cliente,CPF, tipo_conta)
+
         #identifico o caminho do excel e chamo gunção salvar
         novo_dado = conta.salvar_excel(caminho_excel)
+
+    #concat insere uma nova linha no execel com os dados digitados
+    df = pd.concat([df,novo_dado], ignore_index=True)
+
     df.to_excel(caminho_excel, index = False)
+    print (novo_dado)
 
 elif opcao == 2:
     print("opção2 selecionada")
